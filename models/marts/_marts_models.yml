@@ -3,6 +3,10 @@ version: 2
 models:
   - name: fct_loans
     description: "Fact table: one row per loan with macro context and risk bucket."
+    data_tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          arguments:
+            min_value: 2000000
     columns:
       - name: loan_id
         data_tests:
@@ -14,6 +18,16 @@ models:
               arguments:
                 to: ref('grade_risk_buckets')
                 field: grade
+      - name: interest_rate
+        data_tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 40
 
   - name: mart_vintage_defaults
     description: "Default rate by vintage year and grade (finished loans only)."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: ['vintage_year', 'grade']

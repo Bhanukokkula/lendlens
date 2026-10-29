@@ -5,7 +5,7 @@ select
     count(*) as loan_count,
     sum(funded_amount) as total_funded,
     round(avg(interest_rate), 2) as avg_interest_rate,
-    round(avg(is_default) * 100, 2) as default_rate_pct
+        {{ default_rate('is_default') }} as default_rate_pct
 from {{ ref('fct_loans') }}
 where loan_status like '%Fully Paid'
    or loan_status like '%Charged Off'
