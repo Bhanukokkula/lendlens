@@ -1,0 +1,9 @@
+snapshots:
+  - name: loan_status_snapshot
+    relation: ref('loan_status_feed')
+    config:
+      schema: snapshots
+      unique_key: loan_id
+      strategy: check
+      check_cols: ['loan_status']
+      
