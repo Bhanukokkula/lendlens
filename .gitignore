@@ -4,3 +4,4 @@ data/
 target/
 logs/
 dbt_packages/
+.dlt/secrets.toml

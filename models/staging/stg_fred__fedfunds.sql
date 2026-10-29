@@ -1,4 +1,5 @@
+
 select
-    observation_date as month_date,
-    fedfunds as fed_funds_rate
+    cast(observation_date as date) as month_date,
+    try_cast(fedfunds as double) as fed_funds_rate
 from {{ source('fred', 'fedfunds') }}

@@ -7,7 +7,7 @@ sources:
       - name: loans
 
   - name: fred
-    schema: raw
+    schema: raw_fred
     tables:
       - name: fedfunds
       - name: unrate
