@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: lendingclub
+    schema: raw
+    tables:
+      - name: loans
+
+  - name: fred
+    schema: raw
+    tables:
+      - name: fedfunds
+      - name: unrate

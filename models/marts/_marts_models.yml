@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fct_loans
+    description: "Fact table: one row per loan with macro context and risk bucket."
+    columns:
+      - name: loan_id
+        data_tests:
+          - unique
+          - not_null
+      - name: grade
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('grade_risk_buckets')
+                field: grade
+
+  - name: mart_vintage_defaults
+    description: "Default rate by vintage year and grade (finished loans only)."

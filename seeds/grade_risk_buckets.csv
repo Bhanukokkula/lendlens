@@ -1,0 +1,8 @@
+grade,risk_bucket,grade_rank
+A,Prime,1
+B,Prime,2
+C,Near Prime,3
+D,Near Prime,4
+E,Subprime,5
+F,Subprime,6
+G,Subprime,7

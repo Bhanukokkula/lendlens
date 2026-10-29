@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_lendingclub__loans
+    description: "One row per Lending Club loan, cleaned and typed."
+    columns:
+      - name: loan_id
+        description: "Unique loan identifier."
+        data_tests:
+          - unique
+          - not_null
+      - name: loan_amount
+        data_tests:
+          - not_null
+      - name: issue_date
+        data_tests:
+          - not_null
+      - name: grade
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+
+  - name: stg_fred__fedfunds
+    description: "Monthly Fed funds rate."
+    columns:
+      - name: month_date
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_fred__unrate
+    description: "Monthly US unemployment rate."
+    columns:
+      - name: month_date
+        data_tests:
+          - unique
+          - not_null

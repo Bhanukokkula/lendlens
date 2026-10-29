@@ -1,0 +1,7 @@
+lendlens:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: lendlens.duckdb
+      threads: 4

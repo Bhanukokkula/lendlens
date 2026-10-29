@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: int_loans_enriched
+    description: "Loans joined with macro rates at issue month, plus a default flag."
+    columns:
+      - name: loan_id
+        data_tests:
+          - unique
+          - not_null
+      - name: is_default
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1]
