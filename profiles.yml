@@ -3,5 +3,5 @@ lendlens:
   outputs:
     dev:
       type: duckdb
-      path: lendlens.duckdb
+      path: /Users/bhanu/lendlens/lendlens.duckdb
       threads: 4
