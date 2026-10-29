@@ -27,7 +27,23 @@ models:
 
   - name: mart_vintage_defaults
     description: "Default rate by vintage year and grade (finished loans only)."
+    config:
+      contract:
+        enforced: true
     data_tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
             combination_of_columns: ['vintage_year', 'grade']
+    columns:
+      - name: vintage_year
+        data_type: bigint
+      - name: grade
+        data_type: varchar
+      - name: loan_count
+        data_type: bigint
+      - name: total_funded
+        data_type: double
+      - name: avg_interest_rate
+        data_type: double
+      - name: default_rate_pct
+        data_type: double

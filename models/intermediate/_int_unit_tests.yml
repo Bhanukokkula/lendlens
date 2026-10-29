@@ -1,0 +1,23 @@
+unit_tests:
+  - name: test_is_default_flag
+    description: "Charged Off and Default loans get is_default = 1, everything else 0."
+    model: int_loans_enriched
+    given:
+      - input: ref('stg_lendingclub__loans')
+        rows:
+          - {loan_id: '1', loan_status: 'Charged Off', issue_date: '2015-01-01', interest_rate: 10.0}
+          - {loan_id: '2', loan_status: 'Fully Paid', issue_date: '2015-01-01', interest_rate: 10.0}
+          - {loan_id: '3', loan_status: 'Default', issue_date: '2015-01-01', interest_rate: 10.0}
+          - {loan_id: '4', loan_status: 'Current', issue_date: '2015-01-01', interest_rate: 10.0}
+      - input: ref('stg_fred__fedfunds')
+        rows:
+          - {month_date: '2015-01-01', fed_funds_rate: 0.5}
+      - input: ref('stg_fred__unrate')
+        rows:
+          - {month_date: '2015-01-01', unemployment_rate: 5.0}
+    expect:
+      rows:
+        - {loan_id: '1', is_default: 1, rate_spread: 9.5}
+        - {loan_id: '2', is_default: 0, rate_spread: 9.5}
+        - {loan_id: '3', is_default: 1, rate_spread: 9.5}
+        - {loan_id: '4', is_default: 0, rate_spread: 9.5}
