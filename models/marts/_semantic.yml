@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: metricflow_time_spine
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+
+semantic_models:
+  - name: loans
+    model: ref('fct_loans')
+    defaults:
+      agg_time_dimension: issue_date
+    entities:
+      - name: loan
+        type: primary
+        expr: loan_id
+    dimensions:
+      - name: issue_date
+        type: time
+        type_params:
+          time_granularity: day
+      - name: grade
+        type: categorical
+      - name: risk_bucket
+        type: categorical
+      - name: purpose
+        type: categorical
+    measures:
+      - name: total_funded
+        agg: sum
+        expr: funded_amount
+      - name: loan_count
+        agg: count
+        expr: loan_id
+      - name: default_count
+        agg: sum
+        expr: is_default
+      - name: finished_loan_count
+        agg: sum
+        expr: "case when loan_status like '%Fully Paid' or loan_status like '%Charged Off' or loan_status = 'Default' then 1 else 0 end"
+
+metrics:
+  - name: total_funded
+    label: Total Funded
+    type: simple
+    type_params:
+      measure: total_funded
+
+  - name: loan_count
+    label: Loan Count
+    type: simple
+    type_params:
+      measure: loan_count
+
+  - name: default_count
+    label: Default Count
+    type: simple
+    type_params:
+      measure: default_count
+
+  - name: finished_loan_count
+    label: Finished Loan Count
+    type: simple
+    type_params:
+      measure: finished_loan_count
+
+  - name: default_rate
+    label: Default Rate
+    type: ratio
+    type_params:
+      numerator: default_count
+      denominator: finished_loan_count
