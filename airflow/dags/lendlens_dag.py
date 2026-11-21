@@ -14,6 +14,7 @@ DBT_EXECUTABLE = "/Users/bhanu/lendlens/.venv/bin/dbt"
     schedule="0 6 * * *",   # every day at 6 AM
     catchup=False,
     max_active_tasks=1,     # DuckDB allows only one writer at a time
+    max_active_runs=1,      # ...and that applies across runs too
 )
 def lendlens_pipeline():
 
