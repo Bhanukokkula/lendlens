@@ -5,18 +5,6 @@ con = duckdb.connect("lendlens.duckdb")
 
 con.execute("CREATE SCHEMA IF NOT EXISTS raw")
 
-print("Loading Fed funds rate...")
-con.execute("""
-    CREATE OR REPLACE TABLE raw.fedfunds AS
-    SELECT * FROM read_csv_auto('data/raw/fedfunds.csv')
-""")
-
-print("Loading unemployment rate...")
-con.execute("""
-    CREATE OR REPLACE TABLE raw.unrate AS
-    SELECT * FROM read_csv_auto('data/raw/unrate.csv')
-""")
-
 print("Loading Lending Club loans (this takes a minute)...")
 con.execute("""
     CREATE OR REPLACE TABLE raw.loans AS
@@ -28,11 +16,8 @@ con.execute("""
     )
 """)
 
-print("Row counts:")
-tables = ["fedfunds", "unrate", "loans"]
-for table in tables:
-    count = con.execute("SELECT COUNT(*) FROM raw." + table).fetchone()[0]
-    print(table, count)
+count = con.execute("SELECT COUNT(*) FROM raw.loans").fetchone()[0]
+print("loans", count)
 
 con.close()
 print("Done!")
