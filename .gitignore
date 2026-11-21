@@ -7,3 +7,13 @@ dbt_packages/
 .dlt/secrets.toml
 airflow/*
 !airflow/dags/
+
+# data outputs (regenerate with export_marts.py)
+exports/*
+!exports/.gitkeep
+
+# local / generated files
+.DS_Store
+__pycache__/
+*.pyc
+.user.yml
